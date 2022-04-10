@@ -4,7 +4,8 @@
   --form-background: rgb(35, 43, 60);
   --secondary: rgb(138, 146, 164);
   --success-color: rgb(58, 197, 128);
-
+  --active-color: red;
+  --focus-color: red;
 }
 
 body {
@@ -27,4 +28,9 @@ span, p {
 
 a {
   font-family: 'Montserrat', sans-serif;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }

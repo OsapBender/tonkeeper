@@ -1,0 +1,55 @@
+.ModalWrapper {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .5);
+    outline: none;
+}
+
+.ModalContainer {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    max-width: 450px;
+    padding: 12px;
+    margin: 0 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    background: var(--white-color);
+    outline: none;
+}
+
+.Error {
+    color: red;
+    font-size: 14px;
+    margin: 0 0 10px;
+}
+
+.Input {
+    outline: none;
+}
+
+.btnWrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.Btn {
+    width: 120px;
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid;
+    border-radius: 8px;
+    transition: background 0.5s;
+}
+
+.Btn:first-child {
+    margin-right: 20px;
+}

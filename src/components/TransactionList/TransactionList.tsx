@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import cx from 'classnames'
 import styles from './TransactionList.module.css'
 import sendIcon from '../../assets/icons/sendIcon.png'
 import receiveIcon from '../../assets/icons/recieveIcon.png'
@@ -6,14 +7,25 @@ import {prepareAddress} from "./TransactionList.utils";
 import {TransactionHistory} from "./TransactionList.interface";
 import {fetchTransactionsHistory} from "./TransactionHistory.api";
 import Loader from "../Loader";
+import Modal from "../Modal";
+import {COMMENTS, ZERO_STORAGE_FEE} from "./TransactionList.constants";
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState<TransactionHistory[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [modal, setModal] = useState({
         isShow: false,
-        msg: ''
+        msg: '',
+        hash: ''
     })
+
+    const onCloseModal = () => {
+        setModal({
+            isShow: false,
+            msg: '',
+            hash: ''
+        })
+    }
 
     const onLoad = useCallback(() => {
         fetchTransactionsHistory({limit: transactions.length + 10}).then(res => {
@@ -38,11 +50,12 @@ const TransactionList = () => {
         }
     }, [isLoading, onLoad])
 
-    const onClick = (item: TransactionHistory) => {
+    const onEditMsg = (item: TransactionHistory, msg: string | null) => {
         if (item.in_msg.message) {
             setModal({
                 isShow: true,
-                msg: item.in_msg.message
+                msg: msg ? msg : item.in_msg.message,
+                hash: item.transaction_id.hash
             })
         }
     }
@@ -64,14 +77,18 @@ const TransactionList = () => {
 
     return (
         <div className={styles.Wrapper}>
-            {/*{isShowModal && <Modal}*/}
+            {modal.isShow && <Modal message={modal.msg} hash={modal.hash} onClose={onCloseModal}/>}
             <ul className={styles.List}>
                 {transactions.map(item => {
                     const destination = prepareAddress(item.in_msg.destination);
                     const source = prepareAddress(item.in_msg.source);
-                    const isReceived = item.storage_fee === '0';
+                    const isReceived = item.storage_fee === ZERO_STORAGE_FEE;
+
+                    const msg = window.localStorage.getItem(COMMENTS) ? JSON.parse(window.localStorage.getItem(COMMENTS) as string)[item.transaction_id.hash] : null
+
                     return (
-                        <li className={styles.Item} key={item.transaction_id.hash} onClick={() => onClick(item)}>
+                        <li className={cx(styles.Item, {[styles.ClickableItem]: msg || item.in_msg.message})}
+                            key={item.transaction_id.hash} onClick={() => onEditMsg(item, msg)}>
                             <div className={styles.IconWrapper}>
                                 {isReceived ? <img src={receiveIcon} alt="Send"/> : <img src={sendIcon} alt="Send"/>}
                             </div>
@@ -102,9 +119,10 @@ const TransactionList = () => {
                                 </div>
                                 {
                                     item.in_msg.message && (
-                                        <div className={styles.MsgWrapper}>
+                                        <div
+                                            className={isReceived ? cx(styles.MsgWrapper, styles.MsgWrapperReceived) : cx(styles.MsgWrapper, styles.MsgWrapperSent)}>
                                             <p className={styles.MsgContent}>
-                                                {item.in_msg.message}
+                                                {msg ? msg : item.in_msg.message}
                                             </p>
                                         </div>
                                     )
