@@ -1,0 +1,97 @@
+
+.Wrapper {
+    width: 100%;
+    max-width: 560px;
+    margin: 16px auto;
+    padding-left: 16px;
+    background-color: var(--form-background);
+    border-radius: 8px;
+}
+
+.List {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+.Item {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px 16px 16px 0;
+    display: flex;
+    border-bottom: 1px solid rgba(138, 146, 164, .1);
+}
+
+.IconWrapper {
+    margin-right: 16px
+}
+
+.Fact {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ItemHeader {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.StatusWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ReceivedInfoTransaction {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ReceivedInfoTransaction span,
+.SentInfoTransaction span {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--secondary);
+}
+
+.SentInfoTransaction {
+    display: flex;
+    flex-direction: column;
+}
+
+.SentInfoTransactionFact {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SentInfoTransactionFact:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.SumSent, .Action {
+    color: var(--white-color);
+    font-weight: 600;
+}
+
+.SumReceived {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.MsgWrapper {
+    max-width: 250px;
+    padding: 20px;
+    margin-top: 10px;
+    background: rgb(48, 56, 73);
+    border-radius: 8px 24px 24px 24px;
+}
+
+.MsgContent {
+    margin: 0;
+    color: var(--white-color);
+    font-weight: bold;
+    line-break: anywhere;
+}
